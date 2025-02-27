@@ -1,0 +1,5 @@
+name: hardcore-no-regen
+version: '1.0-SNAPSHOT'
+main: com.karotte128.hardcoreNoRegen.HardcoreNoRegen
+api-version: '1.21'
+load: STARTUP
