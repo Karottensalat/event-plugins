@@ -14,8 +14,12 @@ public class EntityDamageHandler implements Listener {
         Entity entity = event.getEntity();
 
         if (entity instanceof Player) {
-            Player player = (Player) entity;
-            player.getAttribute(Attribute.MAX_HEALTH).setBaseValue(player.getHealth() - event.getDamage());
+            if (Timer.timerSeconds < 0) {
+                event.setCancelled(true);
+            } else {
+                Player player = (Player) entity;
+                player.getAttribute(Attribute.MAX_HEALTH).setBaseValue(player.getHealth() - event.getDamage());
+            }
         }
     }
 }

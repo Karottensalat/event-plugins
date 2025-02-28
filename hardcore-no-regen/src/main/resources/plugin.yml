@@ -3,3 +3,8 @@ version: '1.0-SNAPSHOT'
 main: com.karotte128.hardcoreNoRegen.HardcoreNoRegen
 api-version: '1.21'
 load: STARTUP
+commands:
+  timer:
+    description: Challenge Timer
+    usage: /timer <start/reset>
+    permission: eventplugins.admin
