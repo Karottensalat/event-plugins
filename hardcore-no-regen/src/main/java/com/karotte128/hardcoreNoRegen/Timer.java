@@ -22,6 +22,7 @@ public class Timer {
 
     public static void resetTimer(){
         currentTask.cancel();
+        timerSeconds = 0;
     }
 
     private static void processTimerTick(){

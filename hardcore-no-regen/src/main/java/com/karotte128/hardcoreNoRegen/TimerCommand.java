@@ -21,8 +21,8 @@ public class TimerCommand implements CommandExecutor, TabExecutor {
             return false;
         }
 
-        if (args.length != 1) {
-            commandSender.sendMessage("§7Use: /timer <start/reset>");
+        if (!(args.length >= 1)) {
+            commandSender.sendMessage("§7Use: /timer <start/reset/set seconds>");
             return false;
         }
 
@@ -33,6 +33,14 @@ public class TimerCommand implements CommandExecutor, TabExecutor {
             case "reset":
                 Timer.resetTimer();
                 break;
+            case "set":
+                if (args.length == 2){
+                    Timer.timerSeconds = Integer.parseInt(args[1]);
+                    break;
+                } else {
+                    commandSender.sendMessage("missing argument");
+                    return false;
+                }
             default:
                 commandSender.sendMessage("§cunknown argument!");
                 return false;
@@ -46,7 +54,7 @@ public class TimerCommand implements CommandExecutor, TabExecutor {
         final List<String> validArguments = new ArrayList<>();
 
         if (args.length == 1) {
-            StringUtil.copyPartialMatches(args[0], List.of("start", "reset"), validArguments);
+            StringUtil.copyPartialMatches(args[0], List.of("start", "reset", "start"), validArguments);
             return validArguments;
         }
 

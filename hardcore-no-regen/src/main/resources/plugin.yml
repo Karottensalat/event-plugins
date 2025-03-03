@@ -6,5 +6,5 @@ load: STARTUP
 commands:
   timer:
     description: Challenge Timer
-    usage: /timer <start/reset>
+    usage: /timer <start/reset/set seconds>
     permission: eventplugins.admin
