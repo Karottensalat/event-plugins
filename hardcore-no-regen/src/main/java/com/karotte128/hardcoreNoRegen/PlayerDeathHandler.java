@@ -9,7 +9,7 @@ public class PlayerDeathHandler implements Listener {
 
     @EventHandler
     public void PlayerDeathEvent(PlayerDeathEvent event) {
-        Component timeMessage = Component.text(event.getPlayer().getName() + " survived for " + Timer.timerSeconds.toString() + " seconds");
+        Component timeMessage = Component.text(event.getPlayer().getName() + " survived for " + (event.getPlayer().getTicksLived())/20 + " seconds! (" + Timer.timerSeconds.toString() + " seconds on the global timer)");
 
         HardcoreNoRegen.getInstance().getServer().broadcast(timeMessage);
     }

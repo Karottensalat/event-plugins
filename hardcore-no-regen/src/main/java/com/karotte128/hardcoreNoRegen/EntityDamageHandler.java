@@ -1,5 +1,6 @@
 package com.karotte128.hardcoreNoRegen;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -18,7 +19,11 @@ public class EntityDamageHandler implements Listener {
                 event.setCancelled(true);
             } else {
                 Player player = (Player) entity;
-                player.getAttribute(Attribute.MAX_HEALTH).setBaseValue(player.getHealth() - event.getDamage());
+                double remainingHealth = player.getHealth() - event.getDamage();
+                player.getAttribute(Attribute.MAX_HEALTH).setBaseValue(remainingHealth);
+
+                Component damageMessage = Component.text("Player " + player.getName() + " took " + event.getDamage() + "HP damage, only " + remainingHealth + "HP remaining!");
+                HardcoreNoRegen.getInstance().getServer().broadcast(damageMessage);
             }
         }
     }
