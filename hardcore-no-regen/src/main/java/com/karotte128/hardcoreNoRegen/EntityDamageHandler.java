@@ -8,7 +8,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 
+import java.text.DecimalFormat;
+
 public class EntityDamageHandler implements Listener {
+    private static final DecimalFormat damageFormat = new DecimalFormat("#.#");
 
     @EventHandler
     public void EntityDamageEvent(EntityDamageEvent event) {
@@ -23,7 +26,7 @@ public class EntityDamageHandler implements Listener {
                 player.getAttribute(Attribute.MAX_HEALTH).setBaseValue(remainingHealth);
 
                 if (event.getFinalDamage() > 0) {
-                    Component damageMessage = Component.text("Player " + player.getName() + " took " + event.getFinalDamage() + "HP damage, only " + remainingHealth + "HP remaining!");
+                    Component damageMessage = Component.text("Player " + player.getName() + " took " + damageFormat.format(event.getFinalDamage()) + "HP damage, only " + damageFormat.format(remainingHealth) + "HP remaining!");
                     HardcoreNoRegen.getInstance().getServer().broadcast(damageMessage);
                 }
             }
