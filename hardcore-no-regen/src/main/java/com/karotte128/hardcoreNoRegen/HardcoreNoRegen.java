@@ -11,10 +11,12 @@ public final class HardcoreNoRegen extends JavaPlugin {
 
     private final EntityDamageHandler entityDamageHandler;
     private final PlayerDeathHandler playerDeathHandler;
+    private final PlayerChatHandler playerChatHandler;
 
     public HardcoreNoRegen() {
         this.entityDamageHandler = new EntityDamageHandler();
         this.playerDeathHandler = new PlayerDeathHandler();
+        this.playerChatHandler = new PlayerChatHandler();
     }
 
     @Override
@@ -26,6 +28,7 @@ public final class HardcoreNoRegen extends JavaPlugin {
     public void onEnable() {
         getServer().getPluginManager().registerEvents(entityDamageHandler, this);
         getServer().getPluginManager().registerEvents(playerDeathHandler, this);
+        getServer().getPluginManager().registerEvents(playerChatHandler, this);
 
         getLogger().info("Hardcore-No-Regen has been loaded!");
 
