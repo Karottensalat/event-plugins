@@ -1,5 +1,7 @@
 package de.karotte128.unpredictor;
 
+import de.karotte128.unpredictor.util.NewDayDetector;
+import de.karotte128.unpredictor.util.UnpredictorCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
