@@ -1,6 +1,6 @@
 package de.karotte128.unpredictor.util;
 
-import de.karotte128.unpredictor.challenges.ChallengeManager;
+import de.karotte128.unpredictor.challenge.ChallengeManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

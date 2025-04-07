@@ -1,7 +1,7 @@
 package de.karotte128.unpredictor.util;
 
 import de.karotte128.unpredictor.Unpredictor;
-import de.karotte128.unpredictor.challenges.ChallengeManager;
+import de.karotte128.unpredictor.challenge.ChallengeManager;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Server;
 
