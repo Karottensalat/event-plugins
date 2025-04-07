@@ -5,6 +5,8 @@ import de.karotte128.unpredictor.util.UnpredictorCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
+import java.util.Objects;
+
 public final class Unpredictor extends JavaPlugin {
     private static Unpredictor instance;
     private static int taskId;
@@ -19,7 +21,7 @@ public final class Unpredictor extends JavaPlugin {
         BukkitScheduler scheduler = getServer().getScheduler();
         taskId = scheduler.scheduleSyncRepeatingTask(this, new NewDayDetector(), 0, 1);
 
-        getCommand("unpredictor").setExecutor(new UnpredictorCommand());
+        Objects.requireNonNull(getCommand("unpredictor")).setExecutor(new UnpredictorCommand());
 
         getLogger().info("Unpredictor has been loaded!");
     }

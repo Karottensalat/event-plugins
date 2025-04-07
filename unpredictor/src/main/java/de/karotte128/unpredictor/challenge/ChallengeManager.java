@@ -11,7 +11,7 @@ public class ChallengeManager {
 
     public static String currentChallenge;
 
-    private static DefaultChallenge defaultChallenge;
+    private static DefaultChallenge challengeClass;
 
     public static String[] getAllChallenges() {
         return challenges;
@@ -29,14 +29,14 @@ public class ChallengeManager {
     public static void startChallenge(String challenge) {
         currentChallenge = challenge;
         challengeSelector(challenge);
-        if (defaultChallenge != null) {
-            defaultChallenge.loadChallenge(Unpredictor.getInstance());
+        if (challengeClass != null) {
+            challengeClass.loadChallenge(Unpredictor.getInstance());
         }
     }
 
     public static void stopChallenge() {
-        if (defaultChallenge != null) {
-            defaultChallenge.unloadChallenge();
+        if (challengeClass != null) {
+            challengeClass.unloadChallenge();
         }
         currentChallenge = "";
     }
@@ -44,10 +44,10 @@ public class ChallengeManager {
     private static void challengeSelector(String challenge) {
         switch (challenge) {
             case "test1":
-                defaultChallenge = new TestChallenge();
+                challengeClass = new TestChallenge();
                 break;
             default:
-                defaultChallenge = null;
+                challengeClass = null;
                 break;
         }
     }
