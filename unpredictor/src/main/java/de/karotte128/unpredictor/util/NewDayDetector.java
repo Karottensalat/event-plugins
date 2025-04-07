@@ -17,6 +17,7 @@ public class NewDayDetector implements Runnable {
 
     private static void newDay() {
         server.broadcast(Component.text("§cNew Day!"));
+        server.broadcast(Component.text("Old challenge: " + ChallengeManager.getCurrentChallenge()));
         ChallengeManager.stopChallenge();
         String challenge = ChallengeManager.getRandomChallenge();
         ChallengeManager.startChallenge(challenge);

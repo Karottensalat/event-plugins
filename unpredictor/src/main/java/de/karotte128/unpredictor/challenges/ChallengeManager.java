@@ -6,6 +6,8 @@ import java.util.Random;
 public class ChallengeManager {
     private static final String[] challenges = {"test1", "test2"};
 
+    public static String currentChallenge;
+
     public static String[] getAllChallenges() {
         return challenges;
     }
@@ -15,12 +17,16 @@ public class ChallengeManager {
         return Arrays.asList(challenges).get(rand.nextInt(challenges.length));
     }
 
-    public static void startChallenge(String challenge) {
+    public static String getCurrentChallenge() {
+        return currentChallenge;
+    }
 
+    public static void startChallenge(String challenge) {
+        currentChallenge = challenge;
     }
 
     public static void stopChallenge() {
-
+        currentChallenge = "";
     }
 
 }
