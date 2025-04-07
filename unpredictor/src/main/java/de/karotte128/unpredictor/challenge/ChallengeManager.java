@@ -30,13 +30,13 @@ public class ChallengeManager {
         currentChallenge = challenge;
         challengeSelector(challenge);
         if (defaultChallenge != null) {
-            defaultChallenge.load();
+            defaultChallenge.loadChallenge(Unpredictor.getInstance());
         }
     }
 
     public static void stopChallenge() {
         if (defaultChallenge != null) {
-            defaultChallenge.unload();
+            defaultChallenge.unloadChallenge();
         }
         currentChallenge = "";
     }
@@ -44,7 +44,7 @@ public class ChallengeManager {
     private static void challengeSelector(String challenge) {
         switch (challenge) {
             case "test1":
-                defaultChallenge = new TestChallenge(Unpredictor.getInstance());
+                defaultChallenge = new TestChallenge();
                 break;
             default:
                 defaultChallenge = null;
