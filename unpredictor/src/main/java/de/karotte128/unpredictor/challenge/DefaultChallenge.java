@@ -19,8 +19,6 @@ public abstract class DefaultChallenge implements Listener {
         unload();
     }
 
-    public abstract void tick();
-
     public abstract void load();
 
     public abstract void unload();

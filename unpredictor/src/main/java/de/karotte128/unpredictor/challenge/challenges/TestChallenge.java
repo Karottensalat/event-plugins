@@ -8,11 +8,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 public class TestChallenge extends DefaultChallenge {
 
     @Override
-    public void tick() {
-
-    }
-
-    @Override
     public void load() {
         server.broadcast(Component.text("load test challenge"));
     }
