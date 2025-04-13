@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public final class Unpredictor extends JavaPlugin {
     private static Unpredictor instance;
-    private static int taskId;
+    private static int newDayDetectorTask;
 
     @Override
     public void onLoad() {
@@ -19,7 +19,7 @@ public final class Unpredictor extends JavaPlugin {
     @Override
     public void onEnable() {
         BukkitScheduler scheduler = getServer().getScheduler();
-        taskId = scheduler.scheduleSyncRepeatingTask(this, new NewDayDetector(), 0, 1);
+        newDayDetectorTask = scheduler.scheduleSyncRepeatingTask(this, new NewDayDetector(), 0, 1);
 
         Objects.requireNonNull(getCommand("unpredictor")).setExecutor(new UnpredictorCommand());
 
@@ -28,7 +28,7 @@ public final class Unpredictor extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        getServer().getScheduler().cancelTask(taskId);
+        getServer().getScheduler().cancelTask(newDayDetectorTask);
         getLogger().info("Unpredictor has been unloaded!");
     }
 
