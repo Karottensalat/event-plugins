@@ -47,11 +47,7 @@ public class EntitySpawningChallenge extends DefaultChallenge {
         Entity entity = event.getEntity();
         EntityType entityType = event.getEntityType();
         EntityType newType = entityTypeHashMap.get(entityType);
-        Block spawner = entity.getLocation().getBlock();
-        spawner.setType(Material.SPAWNER);
-        CreatureSpawner creatureSpawner = (CreatureSpawner) spawner.getState();
-        creatureSpawner.setSpawnedType(newType);
-        creatureSpawner.update();
+        entity.getWorld().spawnEntity(entity.getLocation(),newType);
         entity.remove();
     }
 }
