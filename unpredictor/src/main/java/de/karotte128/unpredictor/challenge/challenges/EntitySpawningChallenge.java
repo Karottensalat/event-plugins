@@ -52,5 +52,6 @@ public class EntitySpawningChallenge extends DefaultChallenge {
         EntityType entityType = event.getEntityType();
         EntityType newType = entityTypeHashMap.get(entityType);
         entity.getWorld().spawnEntity(entity.getLocation(),newType);
+        entity.remove();
     }
 }
