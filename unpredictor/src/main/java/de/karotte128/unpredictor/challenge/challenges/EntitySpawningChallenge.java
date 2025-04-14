@@ -51,12 +51,6 @@ public class EntitySpawningChallenge extends DefaultChallenge {
         Entity entity = event.getEntity();
         EntityType entityType = event.getEntityType();
         EntityType newType = entityTypeHashMap.get(entityType);
-//        entity.getWorld().spawnEntity(entity.getLocation(),newType);
-        SpawnerMinecart w = (SpawnerMinecart) entity.getWorld().spawnEntity(entity.getLocation(),EntityType.SPAWNER_MINECART);
-        w.spawnAt(entity.getLocation());
-        w.setSpawnedType(newType);
-        w.setMaxSpawnDelay(0);
-        w.remove();
-        entity.remove();
+        entity.getWorld().spawnEntity(entity.getLocation(),newType);
     }
 }
