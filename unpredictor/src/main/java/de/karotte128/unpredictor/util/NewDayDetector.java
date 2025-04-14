@@ -6,7 +6,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.Server;
 
 public class NewDayDetector implements Runnable {
-    static Server server = Unpredictor.getInstance().getServer();
+    private static final Server server = Unpredictor.getInstance().getServer();
 
     @Override
     public void run() {
@@ -20,7 +20,7 @@ public class NewDayDetector implements Runnable {
         server.broadcast(Component.text("Old challenge: " + ChallengeManager.getCurrentChallenge()));
         ChallengeManager.stopChallenge();
         String challenge = ChallengeManager.getRandomChallenge();
+        Debug.debugMessage("New Challenge: " + challenge);
         ChallengeManager.startChallenge(challenge);
-        server.broadcast(Component.text("New Challenge: " + challenge));
     }
 }
