@@ -31,7 +31,7 @@ public class ChallengeManager {
         currentChallenge = challenge;
         challengeSelector(challenge);
         if (challengeClass != null) {
-            challengeClass.loadChallenge(Unpredictor.getInstance());
+            challengeClass.loadChallenge();
         }
     }
 
