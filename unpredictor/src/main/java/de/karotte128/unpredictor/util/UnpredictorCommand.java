@@ -26,9 +26,28 @@ public class UnpredictorCommand implements CommandExecutor, TabExecutor {
                         commandSender.sendMessage("§2Set Challenge: " + strings[1]);
                     } else {
                         commandSender.sendMessage("§4Challenge not found!");
+                        return false;
                     }
                 } else {
                     commandSender.sendMessage("§4Challenge can not be empty!");
+                    return false;
+                }
+                break;
+            case "debug":
+                if (strings.length == 2) {
+                    if (strings[1].equals("true")) {
+                        Debug.debug = true;
+                        commandSender.sendMessage("§2Enabled Debug Mode");
+                    } else if (strings[1].equals("false")) {
+                        Debug.debug = false;
+                        commandSender.sendMessage("§2Disabled Debug Mode");
+                    } else {
+                        commandSender.sendMessage("§3Invalid Command argument!");
+                        return false;
+                    }
+                } else {
+                    commandSender.sendMessage("§3Wrong number of arguments!");
+                    return false;
                 }
                 break;
             default:
@@ -43,7 +62,7 @@ public class UnpredictorCommand implements CommandExecutor, TabExecutor {
         final List<String> validArguments = new ArrayList<>();
 
         if (strings.length == 1) {
-            StringUtil.copyPartialMatches(strings[0], List.of("setchallenge"), validArguments);
+            StringUtil.copyPartialMatches(strings[0], List.of("setchallenge", "debug"), validArguments);
             return validArguments;
         }
 
@@ -51,6 +70,9 @@ public class UnpredictorCommand implements CommandExecutor, TabExecutor {
             switch (strings[0]) {
                 case "setchallenge":
                     StringUtil.copyPartialMatches(strings[1], Arrays.stream(ChallengeManager.getAllChallenges()).toList(), validArguments);
+                    break;
+                case "debug":
+                    StringUtil.copyPartialMatches(strings[1] , List.of("true" , "false"), validArguments);
             }
         }
 
