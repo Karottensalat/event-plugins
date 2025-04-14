@@ -6,6 +6,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.minecart.SpawnerMinecart;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 
 import java.util.*;
@@ -47,11 +48,12 @@ public class EntitySpawningChallenge extends DefaultChallenge {
 
     @EventHandler
     public void onEntitySpawn (EntitySpawnEvent event) {
-
         Entity entity = event.getEntity();
-        EntityType entityType = event.getEntityType();
-        EntityType newType = entityTypeHashMap.get(entityType);
-        entity.getWorld().spawnEntity(entity.getLocation(),newType);
-        entity.remove();
+        if (entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.COMMAND)||entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.CUSTOM)) {
+            EntityType entityType = event.getEntityType();
+            EntityType newType = entityTypeHashMap.get(entityType);
+            entity.getWorld().spawnEntity(entity.getLocation(), newType);
+            entity.remove();
+        }
     }
 }
