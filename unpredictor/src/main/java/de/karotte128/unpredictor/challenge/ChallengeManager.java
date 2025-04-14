@@ -1,13 +1,14 @@
 package de.karotte128.unpredictor.challenge;
 
 import de.karotte128.unpredictor.Unpredictor;
+import de.karotte128.unpredictor.challenge.challenges.DamagingRainChallenge;
 import de.karotte128.unpredictor.challenge.challenges.TestChallenge;
 
 import java.util.Arrays;
 import java.util.Random;
 
 public class ChallengeManager {
-    private static final String[] challenges = {"test1", "test2"};
+    private static final String[] challenges = {"test1", "rain_damage"};
 
     public static String currentChallenge;
 
@@ -30,7 +31,7 @@ public class ChallengeManager {
         currentChallenge = challenge;
         challengeSelector(challenge);
         if (challengeClass != null) {
-            challengeClass.loadChallenge(Unpredictor.getInstance());
+            challengeClass.loadChallenge();
         }
     }
 
@@ -45,6 +46,9 @@ public class ChallengeManager {
         switch (challenge) {
             case "test1":
                 challengeClass = new TestChallenge();
+                break;
+            case "rain_damage":
+                challengeClass = new DamagingRainChallenge();
                 break;
             default:
                 challengeClass = null;
