@@ -1,6 +1,7 @@
 package de.karotte128.unpredictor.challenge.challenges;
 
 import de.karotte128.unpredictor.challenge.DefaultChallenge;
+import de.karotte128.unpredictor.util.Debug;
 import net.kyori.adventure.text.Component;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -9,14 +10,14 @@ public class TestChallenge extends DefaultChallenge {
 
     @Override
     public void load() {
-        server.broadcast(Component.text("load test challenge"));
+        Debug.debugMessage("load test challenge");
         int task = scheduleTask(60);
-        server.broadcast(Component.text("scheduled task " + task));
+        Debug.debugMessage("scheduled task " + task);
     }
 
     @Override
     public void unload() {
-        server.broadcast(Component.text("unload test challenge"));
+        Debug.debugMessage("unload test challenge");
     }
 
     @Override
