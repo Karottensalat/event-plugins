@@ -1,6 +1,7 @@
 package de.karotte128.unpredictor.challenge.challenges;
 
 import de.karotte128.unpredictor.challenge.DefaultChallenge;
+import de.karotte128.unpredictor.util.Debug;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
@@ -9,12 +10,12 @@ public class DamagingRainChallenge extends DefaultChallenge {
     @Override
     public void load() {
         scheduleTask(10);
-        server.broadcast(Component.text("load rain challenge"));
+        Debug.debugMessage("load rain challenge");
     }
 
     @Override
     public void unload() {
-        server.broadcast(Component.text("unload rain challenge"));
+        Debug.debugMessage("unload rain challenge");
     }
 
     @Override
