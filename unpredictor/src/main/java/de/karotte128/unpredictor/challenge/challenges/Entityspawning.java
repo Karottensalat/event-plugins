@@ -33,12 +33,12 @@ public class Entityspawning extends DefaultChallenge {
 
     @Override
     public void unload() {
+        entityTypeHashMap =null;
         server.broadcast(Component.text("unload test challenge"));
     }
 
     @Override
     public void runTask() {
-
     }
 
     @EventHandler
