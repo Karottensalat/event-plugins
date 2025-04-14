@@ -1,25 +1,30 @@
 package de.karotte128.unpredictor.challenge.challenges;
 
 import de.karotte128.unpredictor.challenge.DefaultChallenge;
-import net.kyori.adventure.text.Component;
+import de.karotte128.unpredictor.util.Debug;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
+public class DamagingWaterChallenge extends DefaultChallenge {
 
     @Override
     public void load() {
+        scheduleTask(20);
+        Debug.debugMessage("load water damage challenge");
     }
 
     @Override
     public void unload() {
+        Debug.debugMessage("unload water damage challenge");
     }
 
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                Material blockTyp = player.getLocation().getBlock().getType();
-                if(blockTyp == Material.WATER) {
-                    player.damage(2);
-                }
+    public void runTask() {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            Material blockType = player.getLocation().getBlock().getType();
+            if (blockType == Material.WATER) {
+                player.damage(2);
             }
+        }
     }
 }

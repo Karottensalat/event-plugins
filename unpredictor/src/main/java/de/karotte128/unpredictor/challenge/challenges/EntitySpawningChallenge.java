@@ -1,7 +1,7 @@
 package de.karotte128.unpredictor.challenge.challenges;
 
 import de.karotte128.unpredictor.challenge.DefaultChallenge;
-import net.kyori.adventure.text.Component;
+import de.karotte128.unpredictor.util.Debug;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
@@ -11,10 +11,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import java.util.HashMap;
 
-public class Entityspawning extends DefaultChallenge {
+public class EntitySpawningChallenge extends DefaultChallenge {
 
     private HashMap<EntityType,EntityType> entityTypeHashMap = new HashMap<>();
-
 
     @Override
     public void load() {
@@ -28,29 +27,30 @@ public class Entityspawning extends DefaultChallenge {
                 }
             }
         }
-        server.broadcast(Component.text("load test challenge"));
+        Debug.debugMessage("load entity spawn challenge");
     }
 
     @Override
     public void unload() {
         entityTypeHashMap =null;
-        server.broadcast(Component.text("unload test challenge"));
+        Debug.debugMessage("unload entity spawn challenge");
     }
 
     @Override
     public void runTask() {
+        //nothing here
     }
 
     @EventHandler
-    public void onEntityspawning (EntitySpawnEvent event) {
+    public void onEntitySpawn (EntitySpawnEvent event) {
 
         Entity entity = event.getEntity();
         EntityType entityType = event.getEntityType();
-        EntityType neuType = entityTypeHashMap.get(entityType);
+        EntityType newType = entityTypeHashMap.get(entityType);
         Block spawner = entity.getLocation().getBlock();
         spawner.setType(Material.SPAWNER);
         CreatureSpawner creatureSpawner = (CreatureSpawner) spawner.getState();
-        creatureSpawner.setSpawnedType(neuType);
+        creatureSpawner.setSpawnedType(newType);
         creatureSpawner.update();
         entity.remove();
     }
