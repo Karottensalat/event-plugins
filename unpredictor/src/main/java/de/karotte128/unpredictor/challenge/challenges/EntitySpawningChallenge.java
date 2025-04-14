@@ -38,6 +38,7 @@ public class EntitySpawningChallenge extends DefaultChallenge {
     @Override
     public void unload() {
         entityTypeHashMap =null;
+        preList =null;
         Debug.debugMessage("unload entity spawn challenge");
     }
 
