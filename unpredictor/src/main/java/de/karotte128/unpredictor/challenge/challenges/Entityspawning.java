@@ -36,6 +36,11 @@ public class Entityspawning extends DefaultChallenge {
         server.broadcast(Component.text("unload test challenge"));
     }
 
+    @Override
+    public void runTask() {
+
+    }
+
     @EventHandler
     public void onEntityspawning (EntitySpawnEvent event) {
 
