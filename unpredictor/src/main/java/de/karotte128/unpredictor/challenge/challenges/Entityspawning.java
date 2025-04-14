@@ -50,7 +50,7 @@ public class Entityspawning extends DefaultChallenge {
         Block spawner = entity.getLocation().getBlock();
         spawner.setType(Material.SPAWNER);
         CreatureSpawner creatureSpawner = (CreatureSpawner) spawner.getState();
-        creatureSpawner.setSpawnedType(entityType);
+        creatureSpawner.setSpawnedType(neuType);
         creatureSpawner.update();
         entity.remove();
     }
