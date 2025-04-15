@@ -50,7 +50,7 @@ public class EntitySpawningChallenge extends DefaultChallenge {
     @EventHandler
     public void onEntitySpawn (EntitySpawnEvent event) {
         Entity entity = event.getEntity();
-        if (entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.COMMAND)&&!entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.CUSTOM) &&!entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.CUSTOM) ) {
+        if (!entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.COMMAND)&&!entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.CUSTOM) &&!entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.EXPLOSION) ) {
             EntityType entityType = event.getEntityType();
             EntityType newType = entityTypeHashMap.get(entityType);
             entity.getWorld().spawnEntity(entity.getLocation(), newType);
