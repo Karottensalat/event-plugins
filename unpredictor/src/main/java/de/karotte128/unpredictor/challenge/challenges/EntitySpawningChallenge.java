@@ -18,7 +18,7 @@ import java.util.*;
 public class EntitySpawningChallenge extends DefaultChallenge {
 
     private HashMap<EntityType,EntityType> entityTypeHashMap = new HashMap<>();
-    private Integer WaterAnimal = Bukkit.getSpawnLimit(SpawnCategory.WATER_ANIMAL);
+    private Integer WaterAnimal = Bukkit.getTicksPerSpawns(SpawnCategory.WATER_ANIMAL);
     private Integer anzal;
 
     @Override
@@ -35,7 +35,7 @@ public class EntitySpawningChallenge extends DefaultChallenge {
     @Override
     public void unload() {
         entityTypeHashMap =null;
-        Bukkit.getWorld("Overworld").setSpawnLimit(SpawnCategory.WATER_ANIMAL,anzal);
+        Bukkit.getWorld("Overworld").setTicksPerSpawns(SpawnCategory.WATER_ANIMAL,anzal);
         Debug.debugMessage("unload entity spawn challenge");
     }
 
@@ -54,7 +54,7 @@ public class EntitySpawningChallenge extends DefaultChallenge {
             entity.remove();
             if (entity.getSpawnCategory() == SpawnCategory.WATER_ANIMAL) {
                 WaterAnimal = WaterAnimal - 1;
-                entity.getWorld().setSpawnLimit(SpawnCategory.WATER_ANIMAL, WaterAnimal);
+                entity.getWorld().setTicksPerSpawns(SpawnCategory.WATER_ANIMAL, WaterAnimal);
             }
         }
     }
