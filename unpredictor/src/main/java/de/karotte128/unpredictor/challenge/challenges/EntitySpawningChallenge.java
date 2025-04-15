@@ -29,6 +29,16 @@ public class EntitySpawningChallenge extends DefaultChallenge {
     public void unload() {
         entityTypeHashMap = null;
         spawnLimitHashMap = null;
+        for (World world : Unpredictor.getInstance().getServer().getWorlds()) {
+            List<Entity> entities = world.getEntities();
+
+            for (Entity entity : entities) {
+                if (entity.getScoreboardTags().contains("unpredictor_swap_spawn")) {
+                    entity.remove();
+                }
+            }
+        }
+
         Debug.debugMessage("unload entity spawn challenge");
     }
 
@@ -70,7 +80,9 @@ public class EntitySpawningChallenge extends DefaultChallenge {
                 }
 
                 if (spawnLimitHashMap.get(spawnCategory) >= 1) {
-                    entity.getWorld().spawnEntity(entity.getLocation(), entityTypeHashMap.get(entityType));
+                    Entity newEntity = entity.getWorld().spawnEntity(entity.getLocation(), entityTypeHashMap.get(entityType));
+                    newEntity.addScoreboardTag("unpredictor_swap_spawn");
+
                     spawnLimitHashMap.put(spawnCategory, spawnLimitHashMap.get(spawnCategory) - 1);
                     entity.remove();
                 } else {
