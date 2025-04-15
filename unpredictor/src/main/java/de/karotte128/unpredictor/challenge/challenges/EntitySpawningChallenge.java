@@ -43,7 +43,11 @@ public class EntitySpawningChallenge extends DefaultChallenge {
                     .mapToInt(entity -> 1)
                     .sum();
 
-            Debug.debugMessage("SpawnCategory " + category + " has " + amount + " entities.");
+            int spawnLimit = world.getSpawnLimit(category) - amount;
+            spawnLimitHashMap.put(category, spawnLimit);
+
+//            Debug.debugMessage("SpawnCategory " + category + " has " + amount + " entities.");
+//            Debug.debugMessage("SpawnCategory " + category + " max value is " + spawnLimit);
         }
 
     }
@@ -52,22 +56,26 @@ public class EntitySpawningChallenge extends DefaultChallenge {
     public void onEntitySpawn (EntitySpawnEvent event) {
         Entity entity = event.getEntity();
         EntityType entityType = event.getEntityType();
+        SpawnCategory spawnCategory = entity.getSpawnCategory();
 
         if (entityType != EntityType.PLAYER && entityType != EntityType.ITEM && entityType != EntityType.UNKNOWN) {
             if (!entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.COMMAND) && !entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.CUSTOM) && !entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.EXPLOSION)) {
 
                 if (entityTypeHashMap.get(entityType) == null) {
                     entityTypeHashMap.put(entityType, getRandomEntity());
-                    spawnLimitHashMap.put(entity.getSpawnCategory(), entity.getWorld().getSpawnLimit(entity.getSpawnCategory()));
                 }
 
-                if (spawnLimitHashMap.get(entity.getSpawnCategory()) >= 1) {
+                if (spawnLimitHashMap.get(spawnCategory) == null) {
+                    spawnLimitHashMap.put(spawnCategory, entity.getWorld().getSpawnLimit(spawnCategory));
+                }
+
+                if (spawnLimitHashMap.get(spawnCategory) >= 1) {
                     entity.getWorld().spawnEntity(entity.getLocation(), entityTypeHashMap.get(entityType));
-                    spawnLimitHashMap.put(entity.getSpawnCategory(), spawnLimitHashMap.get(entity.getSpawnCategory()) - 1);
+                    spawnLimitHashMap.put(spawnCategory, spawnLimitHashMap.get(spawnCategory) - 1);
+                    entity.remove();
                 } else {
                     event.setCancelled(true);
                 }
-                entity.remove();
             }
         }
     }
