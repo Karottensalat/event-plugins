@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class ChallengeManager {
     private static final String[] challenges = {"test1", "rain_damage", "dangerous_blocks", "entity_interaction", "water_damage", "swapped_spawning"};
-
+  
     public static String currentChallenge;
 
     private static DefaultChallenge challengeClass;
