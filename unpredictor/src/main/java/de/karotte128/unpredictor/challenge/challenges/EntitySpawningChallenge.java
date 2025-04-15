@@ -4,6 +4,7 @@ import de.karotte128.unpredictor.challenge.DefaultChallenge;
 import de.karotte128.unpredictor.util.Debug;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.SpawnCategory;
@@ -34,6 +35,7 @@ public class EntitySpawningChallenge extends DefaultChallenge {
     @Override
     public void unload() {
         entityTypeHashMap =null;
+        Bukkit.getWorld("Overworld").setSpawnLimit(SpawnCategory.WATER_ANIMAL,anzal);
         Debug.debugMessage("unload entity spawn challenge");
     }
 
@@ -51,8 +53,8 @@ public class EntitySpawningChallenge extends DefaultChallenge {
             entity.getWorld().spawnEntity(entity.getLocation(), newType);
             entity.remove();
             if (entity.getSpawnCategory() == SpawnCategory.WATER_ANIMAL) {
-                anzal = anzal - 1;
-                entity.getWorld().setSpawnLimit(SpawnCategory.WATER_ANIMAL, anzal);
+                WaterAnimal = WaterAnimal - 1;
+                entity.getWorld().setSpawnLimit(SpawnCategory.WATER_ANIMAL, WaterAnimal);
             }
         }
     }
