@@ -1,14 +1,11 @@
 package de.karotte128.unpredictor.challenge.challenges;
 
+import de.karotte128.unpredictor.Unpredictor;
 import de.karotte128.unpredictor.challenge.DefaultChallenge;
 import de.karotte128.unpredictor.util.Debug;
-import org.bukkit.Bukkit;
-import org.bukkit.Server;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.SpawnCategory;
-import org.bukkit.entity.minecart.SpawnerMinecart;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
@@ -16,26 +13,20 @@ import org.bukkit.event.entity.EntitySpawnEvent;
 import java.util.*;
 
 public class EntitySpawningChallenge extends DefaultChallenge {
+    private static final World world = Unpredictor.getInstance().getServer().getWorld("world");
 
     private HashMap<EntityType,EntityType> entityTypeHashMap = new HashMap<>();
-    private Integer WaterAnimal = Bukkit.getTicksPerSpawns(SpawnCategory.WATER_ANIMAL);
-    private Integer anzal;
+    private HashMap<EntityType,Integer> spawnLimitHashMap = new HashMap<>();
 
     @Override
     public void load() {
-        for (EntityType type :EntityType.values()){
-            if (type != EntityType.PLAYER && type != EntityType.ITEM && type != EntityType.UNKNOWN) {
-                entityTypeHashMap.put(type, getRandomEntity());
-            }
-        }
-        anzal = WaterAnimal;
         Debug.debugMessage("load entity spawn challenge");
     }
 
     @Override
     public void unload() {
-        entityTypeHashMap =null;
-        Bukkit.getWorld("world").setTicksPerSpawns(SpawnCategory.WATER_ANIMAL,anzal);
+        entityTypeHashMap = null;
+        spawnLimitHashMap = null;
         Debug.debugMessage("unload entity spawn challenge");
     }
 
@@ -47,15 +38,22 @@ public class EntitySpawningChallenge extends DefaultChallenge {
     @EventHandler
     public void onEntitySpawn (EntitySpawnEvent event) {
         Entity entity = event.getEntity();
-        if (!entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.COMMAND)&&!entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.CUSTOM) &&!entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.EXPLOSION) ) {
+        if (!entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.COMMAND) && !entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.CUSTOM) && !entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.EXPLOSION)) {
             EntityType entityType = event.getEntityType();
-            EntityType newType = entityTypeHashMap.get(entityType);
-            entity.getWorld().spawnEntity(entity.getLocation(), newType);
-            entity.remove();
-            if (entity.getSpawnCategory() == SpawnCategory.WATER_ANIMAL) {
-                WaterAnimal = WaterAnimal - 1;
-                entity.getWorld().setTicksPerSpawns(SpawnCategory.WATER_ANIMAL, WaterAnimal);
+
+            if (entityTypeHashMap.get(entityType) == null) {
+                if (entityType != EntityType.PLAYER && entityType != EntityType.ITEM && entityType != EntityType.UNKNOWN) {
+                    entityTypeHashMap.put(entityType, getRandomEntity());
+                    spawnLimitHashMap.put(entityType, world.getSpawnLimit(entity.getSpawnCategory()));
+                }
             }
+
+            EntityType newType = entityTypeHashMap.get(entityType);
+            if (spawnLimitHashMap.get(entityType) >= 1) {
+                entity.getWorld().spawnEntity(entity.getLocation(), newType);
+                spawnLimitHashMap.put(entityType, spawnLimitHashMap.get(entityType) - 1);
+            }
+            entity.remove();
         }
     }
 
