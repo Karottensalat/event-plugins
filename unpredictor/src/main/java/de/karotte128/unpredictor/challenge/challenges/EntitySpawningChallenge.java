@@ -14,32 +14,22 @@ import java.util.*;
 
 public class EntitySpawningChallenge extends DefaultChallenge {
 
-    private ArrayList<EntityType> preList = new ArrayList<>();
     private HashMap<EntityType,EntityType> entityTypeHashMap = new HashMap<>();
 
     @Override
     public void load() {
-        for (EntityType t :EntityType.values()){
-            if (t != EntityType.PLAYER || t != EntityType.ITEM || t != EntityType.UNKNOWN) {
-                preList.add(t);
+        for (EntityType type :EntityType.values()){
+            if (type != EntityType.PLAYER && type != EntityType.ITEM && type != EntityType.UNKNOWN) {
+                entityTypeHashMap.put(type, getRandomEntity());
             }
         }
-        Collections.shuffle(preList);
-        for (int i = 0; i < preList.size(); i++) {
-            if (entityTypeHashMap.containsKey(null)) {
-                entityTypeHashMap.put(preList.get(i), entityTypeHashMap.get(null));
-                entityTypeHashMap.put(entityTypeHashMap.get(null), preList.get(i));
-            } else {
-                entityTypeHashMap.put(null, preList.get(i));
-            }
-        }
+
         Debug.debugMessage("load entity spawn challenge");
     }
 
     @Override
     public void unload() {
         entityTypeHashMap =null;
-        preList =null;
         Debug.debugMessage("unload entity spawn challenge");
     }
 
@@ -57,5 +47,10 @@ public class EntitySpawningChallenge extends DefaultChallenge {
             entity.getWorld().spawnEntity(entity.getLocation(), newType);
             entity.remove();
         }
+    }
+
+    private static EntityType getRandomEntity() {
+        Random rand = new Random();
+        return Arrays.asList(EntityType.values()).get(rand.nextInt(EntityType.values().length));
     }
 }
