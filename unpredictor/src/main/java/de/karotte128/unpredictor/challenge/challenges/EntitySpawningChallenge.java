@@ -35,7 +35,7 @@ public class EntitySpawningChallenge extends DefaultChallenge {
     @Override
     public void unload() {
         entityTypeHashMap =null;
-        Bukkit.getWorld("Overworld").setTicksPerSpawns(SpawnCategory.WATER_ANIMAL,anzal);
+        Bukkit.getWorld("world").setTicksPerSpawns(SpawnCategory.WATER_ANIMAL,anzal);
         Debug.debugMessage("unload entity spawn challenge");
     }
 
