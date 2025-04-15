@@ -2,6 +2,7 @@ package de.karotte128.unpredictor.challenge.challenges;
 
 import de.karotte128.unpredictor.challenge.DefaultChallenge;
 import de.karotte128.unpredictor.util.Debug;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.minecart.SpawnerMinecart;
@@ -24,12 +25,12 @@ public class EntitySpawningChallenge extends DefaultChallenge {
             }
         }
         Collections.shuffle(preList);
-        for (EntityType type : preList) {
+        for (int i = 0; i < preList.size(); i++) {
             if (entityTypeHashMap.containsKey(null)) {
-                entityTypeHashMap.put(type, entityTypeHashMap.get(null));
-                entityTypeHashMap.put(entityTypeHashMap.get(null), type);
+                entityTypeHashMap.put(preList.get(i), entityTypeHashMap.get(null));
+                entityTypeHashMap.put(entityTypeHashMap.get(null), preList.get(i));
             } else {
-                entityTypeHashMap.put(null, type);
+                entityTypeHashMap.put(null, preList.get(i));
             }
         }
         Debug.debugMessage("load entity spawn challenge");
