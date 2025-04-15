@@ -3,7 +3,6 @@ package de.karotte128.unpredictor.challenge.challenges;
 import de.karotte128.unpredictor.Unpredictor;
 import de.karotte128.unpredictor.challenge.DefaultChallenge;
 import de.karotte128.unpredictor.util.Debug;
-import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -17,11 +16,12 @@ import java.util.*;
 public class EntitySpawningChallenge extends DefaultChallenge {
     private static final World world = Unpredictor.getInstance().getServer().getWorld("world");
 
-    private HashMap<EntityType,EntityType> entityTypeHashMap = new HashMap<>();
-    private HashMap<EntityType,Integer> spawnLimitHashMap = new HashMap<>();
+    private HashMap<EntityType, EntityType> entityTypeHashMap = new HashMap<>();
+    private HashMap<SpawnCategory, Integer> spawnLimitHashMap = new HashMap<>();
 
     @Override
     public void load() {
+        scheduleTask(200);
         Debug.debugMessage("load entity spawn challenge");
     }
 
@@ -34,28 +34,41 @@ public class EntitySpawningChallenge extends DefaultChallenge {
 
     @Override
     public void runTask() {
-        //nothing here
+        for (Map.Entry<SpawnCategory, Integer> entry : spawnLimitHashMap.entrySet()) {
+            SpawnCategory category = entry.getKey();
+
+            assert world != null;
+            int amount = world.getEntities().stream()
+                    .filter(entity -> entity.getSpawnCategory() == category)
+                    .mapToInt(entity -> 1)
+                    .sum();
+
+            Debug.debugMessage("SpawnCategory " + category + " has " + amount + " entities.");
+        }
+
     }
 
     @EventHandler
     public void onEntitySpawn (EntitySpawnEvent event) {
         Entity entity = event.getEntity();
-        if (!entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.COMMAND) && !entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.CUSTOM) && !entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.EXPLOSION)) {
-            EntityType entityType = event.getEntityType();
+        EntityType entityType = event.getEntityType();
 
-            if (entityTypeHashMap.get(entityType) == null) {
-                if (entityType != EntityType.PLAYER && entityType != EntityType.ITEM && entityType != EntityType.UNKNOWN) {
+        if (entityType != EntityType.PLAYER && entityType != EntityType.ITEM && entityType != EntityType.UNKNOWN) {
+            if (!entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.COMMAND) && !entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.CUSTOM) && !entity.getEntitySpawnReason().equals(CreatureSpawnEvent.SpawnReason.EXPLOSION)) {
+
+                if (entityTypeHashMap.get(entityType) == null) {
                     entityTypeHashMap.put(entityType, getRandomEntity());
-                    spawnLimitHashMap.put(entityType, entity.getWorld().getSpawnLimit(entity.getSpawnCategory()));
+                    spawnLimitHashMap.put(entity.getSpawnCategory(), entity.getWorld().getSpawnLimit(entity.getSpawnCategory()));
                 }
-            }
 
-            EntityType newType = entityTypeHashMap.get(entityType);
-            if (spawnLimitHashMap.get(entityType) >= 1) {
-                entity.getWorld().spawnEntity(entity.getLocation(), newType);
-                spawnLimitHashMap.put(entityType, spawnLimitHashMap.get(entityType) - 1);
+                if (spawnLimitHashMap.get(entity.getSpawnCategory()) >= 1) {
+                    entity.getWorld().spawnEntity(entity.getLocation(), entityTypeHashMap.get(entityType));
+                    spawnLimitHashMap.put(entity.getSpawnCategory(), spawnLimitHashMap.get(entity.getSpawnCategory()) - 1);
+                } else {
+                    event.setCancelled(true);
+                }
+                entity.remove();
             }
-            entity.remove();
         }
     }
 
