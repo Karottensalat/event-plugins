@@ -3,8 +3,10 @@ package de.karotte128.unpredictor.challenge.challenges;
 import de.karotte128.unpredictor.challenge.DefaultChallenge;
 import de.karotte128.unpredictor.util.Debug;
 import org.bukkit.Bukkit;
+import org.bukkit.Server;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.SpawnCategory;
 import org.bukkit.entity.minecart.SpawnerMinecart;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -15,6 +17,8 @@ import java.util.*;
 public class EntitySpawningChallenge extends DefaultChallenge {
 
     private HashMap<EntityType,EntityType> entityTypeHashMap = new HashMap<>();
+    private Integer WaterAnimal = Bukkit.getSpawnLimit(SpawnCategory.WATER_ANIMAL);
+    private Integer anzal;
 
     @Override
     public void load() {
@@ -23,7 +27,7 @@ public class EntitySpawningChallenge extends DefaultChallenge {
                 entityTypeHashMap.put(type, getRandomEntity());
             }
         }
-
+        anzal = WaterAnimal;
         Debug.debugMessage("load entity spawn challenge");
     }
 
@@ -46,6 +50,10 @@ public class EntitySpawningChallenge extends DefaultChallenge {
             EntityType newType = entityTypeHashMap.get(entityType);
             entity.getWorld().spawnEntity(entity.getLocation(), newType);
             entity.remove();
+            if (entity.getSpawnCategory() == SpawnCategory.WATER_ANIMAL) {
+                anzal = anzal - 1;
+                entity.getWorld().setSpawnLimit(SpawnCategory.WATER_ANIMAL, anzal);
+            }
         }
     }
 
