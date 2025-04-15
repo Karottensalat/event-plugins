@@ -19,13 +19,13 @@ public class EntitySpawningChallenge extends DefaultChallenge {
 
     private HashMap<EntityType,EntityType> entityTypeHashMap = new HashMap<>();
     private HashMap<EntityType,Integer> spawnLimitHashMap = new HashMap<>();
-    private HashMap<SpawnCategory,Integer> orgnialSpawnLimitHashMap = new HashMap<>();
+    private HashMap<SpawnCategory,Integer> orignialSpawnLimitHashMap = new HashMap<>();
 
     @Override
     public void load() {
         Debug.debugMessage("load entity spawn challenge");
         for (SpawnCategory spawnCategory : SpawnCategory.values()) {
-            orgnialSpawnLimitHashMap.put(spawnCategory,Bukkit.getSpawnLimit(spawnCategory));
+            orignialSpawnLimitHashMap.put(spawnCategory,Bukkit.getSpawnLimit(spawnCategory));
         }
     }
 
@@ -33,9 +33,9 @@ public class EntitySpawningChallenge extends DefaultChallenge {
     public void unload() {
         entityTypeHashMap = null;
         spawnLimitHashMap = null;
-        for (World world1 :Bukkit.getWorlds()) {
+        for (World world1 : Unpredictor.getInstance().getServer().getWorlds()) {
             for (SpawnCategory spawnCategory : SpawnCategory.values()) {
-                world1.setSpawnLimit(spawnCategory, orgnialSpawnLimitHashMap.get(spawnCategory));
+                world1.setSpawnLimit(spawnCategory, orignialSpawnLimitHashMap.get(spawnCategory));
             }
         }
         Debug.debugMessage("unload entity spawn challenge");
