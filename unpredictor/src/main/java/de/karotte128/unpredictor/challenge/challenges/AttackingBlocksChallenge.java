@@ -2,6 +2,7 @@ package de.karotte128.unpredictor.challenge.challenges;
 
 import de.karotte128.unpredictor.challenge.DefaultChallenge;
 import de.karotte128.unpredictor.util.Debug;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -11,9 +12,6 @@ import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.loot.LootTable;
-import org.bukkit.loot.LootTables;
-import org.bukkit.loot.Lootable;
 import org.bukkit.util.Transformation;
 import org.joml.AxisAngle4f;
 import org.joml.Vector3f;
@@ -62,6 +60,7 @@ public class AttackingBlocksChallenge extends DefaultChallenge {
         zombie.setBaby();
         zombie.setCanPickupItems(false);
         zombie.getEquipment().clear();
+        zombie.customName(Component.text("attacking block"));
         zombie.addScoreboardTag("unpredictor_attacking_block");
         zombie.addScoreboardTag("unpredictor_zombie");
 
@@ -70,7 +69,6 @@ public class AttackingBlocksChallenge extends DefaultChallenge {
 
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
-
         if (event.getEntity().getScoreboardTags().contains("unpredictor_zombie")) {
             event.getDrops().clear();
             event.setDroppedExp(0);
