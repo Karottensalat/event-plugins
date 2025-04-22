@@ -48,7 +48,7 @@ public class AttackingBlocksChallenge extends DefaultChallenge {
         Location blockLocation = event.getBlock().getLocation();
         World world = event.getBlock().getWorld();
 
-        Transformation transformation = new Transformation(new Vector3f(0, -1, 0), new AxisAngle4f(), new Vector3f(1, 1, 1), new AxisAngle4f());
+        Transformation transformation = new Transformation(new Vector3f(-0.5F, -1, -0.5F), new AxisAngle4f(), new Vector3f(1, 1, 1), new AxisAngle4f());
 
         BlockDisplay blockDisplay = event.getBlock().getWorld().spawn(blockLocation, BlockDisplay.class);
         blockDisplay.setBlock(blockMaterial.createBlockData());
@@ -56,12 +56,12 @@ public class AttackingBlocksChallenge extends DefaultChallenge {
         blockDisplay.addScoreboardTag("unpredictor_attacking_block");
         blockDisplay.addScoreboardTag("unpredictor_block_display");
 
-        Zombie zombie = world.spawn(blockLocation, Zombie.class);
+        Zombie zombie = world.spawn(blockLocation.toCenterLocation().add(0, -0.5, 0), Zombie.class);
         zombie.setInvisible(true);
         zombie.setShouldBurnInDay(false);
         zombie.setBaby();
         zombie.setCanPickupItems(false);
-        zombie.clearActiveItem();
+        zombie.getEquipment().clear();
         zombie.addScoreboardTag("unpredictor_attacking_block");
         zombie.addScoreboardTag("unpredictor_zombie");
 
