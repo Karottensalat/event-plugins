@@ -6,9 +6,14 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.BlockDisplay;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.loot.LootTable;
+import org.bukkit.loot.LootTables;
+import org.bukkit.loot.Lootable;
 import org.bukkit.util.Transformation;
 import org.joml.AxisAngle4f;
 import org.joml.Vector3f;
@@ -49,13 +54,27 @@ public class AttackingBlocksChallenge extends DefaultChallenge {
         blockDisplay.setBlock(blockMaterial.createBlockData());
         blockDisplay.setTransformation(transformation);
         blockDisplay.addScoreboardTag("unpredictor_attacking_block");
+        blockDisplay.addScoreboardTag("unpredictor_block_display");
 
         Zombie zombie = world.spawn(blockLocation, Zombie.class);
         zombie.setInvisible(true);
         zombie.setShouldBurnInDay(false);
         zombie.setBaby();
+        zombie.setCanPickupItems(false);
+        zombie.clearActiveItem();
         zombie.addScoreboardTag("unpredictor_attacking_block");
+        zombie.addScoreboardTag("unpredictor_zombie");
 
         zombie.addPassenger(blockDisplay);
+    }
+
+    @EventHandler
+    public void onEntityDeath(EntityDeathEvent event) {
+
+        if (event.getEntity().getScoreboardTags().contains("unpredictor_zombie")) {
+            event.getDrops().clear();
+            event.setDroppedExp(0);
+            event.getEntity().getPassengers().forEach(Entity::remove);
+        }
     }
 }
