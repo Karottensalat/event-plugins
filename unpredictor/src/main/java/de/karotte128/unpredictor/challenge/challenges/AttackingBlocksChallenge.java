@@ -60,6 +60,7 @@ public class AttackingBlocksChallenge extends DefaultChallenge {
         zombie.setBaby();
         zombie.setCanPickupItems(false);
         zombie.getEquipment().clear();
+        zombie.setSilent(true);
         zombie.customName(Component.text("attacking block"));
         zombie.addScoreboardTag("unpredictor_attacking_block");
         zombie.addScoreboardTag("unpredictor_zombie");
