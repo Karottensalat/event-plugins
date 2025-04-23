@@ -14,6 +14,7 @@ import java.util.Random;
 public class LightningSpawnsEntitiesChallenge extends DefaultChallenge {
     @Override
     public void load() {
+        Unpredictor.getInstance().getServer().getWorld("world").setThundering(true);
         Unpredictor.getInstance().getServer().getWorld("world").setThunderDuration(24000);
         Debug.debugMessage("load lightning spawning challenge");
     }
