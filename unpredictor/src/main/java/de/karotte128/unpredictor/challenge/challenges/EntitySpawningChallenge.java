@@ -1,6 +1,5 @@
 package de.karotte128.unpredictor.challenge.challenges;
 
-import de.karotte128.unpredictor.Unpredictor;
 import de.karotte128.unpredictor.challenge.DefaultChallenge;
 import de.karotte128.unpredictor.util.Debug;
 import org.bukkit.World;
@@ -14,7 +13,7 @@ import org.bukkit.event.entity.EntitySpawnEvent;
 import java.util.*;
 
 public class EntitySpawningChallenge extends DefaultChallenge {
-    private static final World world = Unpredictor.getInstance().getServer().getWorld("world");
+    private static final World world = server.getWorld("world");
 
     private HashMap<EntityType, EntityType> entityTypeHashMap = new HashMap<>();
     private HashMap<SpawnCategory, Integer> spawnLimitHashMap = new HashMap<>();
@@ -29,7 +28,7 @@ public class EntitySpawningChallenge extends DefaultChallenge {
     public void unload() {
         entityTypeHashMap = null;
         spawnLimitHashMap = null;
-        for (World world : Unpredictor.getInstance().getServer().getWorlds()) {
+        for (World world : server.getWorlds()) {
             List<Entity> entities = world.getEntities();
 
             for (Entity entity : entities) {

@@ -2,7 +2,6 @@ package de.karotte128.unpredictor.challenge.challenges;
 
 import de.karotte128.unpredictor.challenge.DefaultChallenge;
 import de.karotte128.unpredictor.util.Debug;
-import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
 public class DamagingRainChallenge extends DefaultChallenge {

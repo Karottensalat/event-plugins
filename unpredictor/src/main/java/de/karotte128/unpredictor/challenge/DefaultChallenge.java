@@ -8,11 +8,11 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
 public abstract class DefaultChallenge implements Listener {
-    public final Server server = Unpredictor.getInstance().getServer();
+    public static final Server server = Unpredictor.getInstance().getServer();
     private final BukkitScheduler scheduler = server.getScheduler();
 
     private int challengeTask;
-    private Plugin plugin = Unpredictor.getInstance();
+    public final Plugin plugin = Unpredictor.getInstance();
 
     public void loadChallenge() {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
