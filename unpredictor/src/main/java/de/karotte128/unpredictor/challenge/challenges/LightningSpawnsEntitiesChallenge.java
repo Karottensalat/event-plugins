@@ -1,6 +1,5 @@
 package de.karotte128.unpredictor.challenge.challenges;
 
-import de.karotte128.unpredictor.Unpredictor;
 import de.karotte128.unpredictor.challenge.DefaultChallenge;
 import de.karotte128.unpredictor.util.Debug;
 import org.bukkit.Location;
@@ -14,7 +13,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class LightningSpawnsEntitiesChallenge extends DefaultChallenge {
-    private static final World world = Unpredictor.getInstance().getServer().getWorld("world");
+    private static final World world = server.getWorld("world");
 
     @Override
     public void load() {
