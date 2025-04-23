@@ -9,7 +9,6 @@ import org.bukkit.Registry;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
