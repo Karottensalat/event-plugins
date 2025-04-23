@@ -6,7 +6,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
@@ -19,6 +19,7 @@ public class RandomAttributeChallenge extends DefaultChallenge {
         AttributeModifier modifier = new AttributeModifier(new NamespacedKey(plugin, "attribute"), 100, AttributeModifier.Operation.ADD_SCALAR); //TODO: Change debug value 100 to random generated value
 
         server.getOnlinePlayers().forEach(player -> {
+            Debug.debugMessage(attribute.toString());
             Objects.requireNonNull(player.getAttribute(attribute)).addModifier(modifier);
         });
 
@@ -40,7 +41,13 @@ public class RandomAttributeChallenge extends DefaultChallenge {
     }
 
     private Attribute randomAttribute() {
+        List<Attribute> attributeList = new java.util.ArrayList<>(List.of(Attribute.values()));
+
+        attributeList.remove(Attribute.GENERIC_FLYING_SPEED);
+        attributeList.remove(Attribute.GENERIC_FOLLOW_RANGE);
+        attributeList.remove(Attribute.ZOMBIE_SPAWN_REINFORCEMENTS);
+
         Random rand = new Random();
-        return Arrays.asList(Attribute.values()).get(rand.nextInt(Attribute.values().length));
+        return attributeList.get(rand.nextInt(attributeList.size()));
     }
 }
