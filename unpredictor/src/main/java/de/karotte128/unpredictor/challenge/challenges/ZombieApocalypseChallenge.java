@@ -4,6 +4,8 @@ import de.karotte128.unpredictor.challenge.DefaultChallenge;
 import de.karotte128.unpredictor.util.Debug;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 
@@ -34,12 +36,22 @@ public class ZombieApocalypseChallenge extends DefaultChallenge {
     }
 
     private void spawnZombie(Player player) {
+        Location spawnLocation = getRandomSpawnLocation(player.getLocation(), 24, 20, 5);
+
+        if (spawnLocation != null) {
+            Zombie zombie = world.spawn(spawnLocation, Zombie.class);
+            zombie.addScoreboardTag("unpredictor_zombie_apocalypse");
+            zombie.setShouldBurnInDay(false);
+            zombie.setCanBreakDoors(true);
+        } else {
+            Debug.debugMessage("No valid spawn location found!");
+        }
+    }
+
+    private Location getRandomSpawnLocation(Location center, double maxRadius, double minRadius, int maxSearchHeight) {
         Random rand = new Random();
 
         double angle = rand.nextDouble() * 2 * Math.PI;
-
-        int maxRadius = 24;
-        int minRadius = 20;
 
         double distance = Math.sqrt(rand.nextDouble()) *
                 (maxRadius - minRadius) + minRadius;
@@ -47,11 +59,28 @@ public class ZombieApocalypseChallenge extends DefaultChallenge {
         int x = (int)(Math.cos(angle) * distance);
         int z = (int)(Math.sin(angle) * distance);
 
-        Location spawnLocation = player.getLocation().add(x ,0, z);
+        Location testLocation = center.clone().add(x, 0, z);
 
-        Zombie zombie = world.spawn(spawnLocation, Zombie.class);
-        zombie.addScoreboardTag("unpredictor_zombie_apocalypse");
-        zombie.setShouldBurnInDay(false);
-        zombie.setCanBreakDoors(true);
+        if (isSafeLocation(testLocation)) {
+            return testLocation;
+        }
+
+        for (int heightOffset = 1; heightOffset <= maxSearchHeight; heightOffset++) {
+            Location above = testLocation.clone().add(0, heightOffset, 0);
+            if (isSafeLocation(above)) {
+                return above;
+            }
+
+            Location below = testLocation.clone().add(0, -heightOffset, 0);
+            if (isSafeLocation(below)) {
+                return below;
+            }
+        }
+
+        return null;
+    }
+
+    private boolean isSafeLocation(Location location) {
+        return true; //TODO: add safe location check
     }
 }
