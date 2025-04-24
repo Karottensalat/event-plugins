@@ -36,7 +36,7 @@ public class ZombieApocalypseChallenge extends DefaultChallenge {
     }
 
     private void spawnZombie(Player player) {
-        Location spawnLocation = getRandomSpawnLocation(player.getLocation(), 24, 20, 5);
+        Location spawnLocation = getRandomSpawnLocation(player.getLocation(), 24, 20, 10);
 
         if (spawnLocation != null) {
             Zombie zombie = world.spawn(spawnLocation, Zombie.class);
@@ -81,6 +81,13 @@ public class ZombieApocalypseChallenge extends DefaultChallenge {
     }
 
     private boolean isSafeLocation(Location location) {
-        return true; //TODO: add safe location check
+
+        Block block = location.getBlock();
+        Block below = block.getRelative(BlockFace.DOWN);
+
+        return below.getType().isSolid() &&
+                !below.isLiquid() &&
+                !block.isLiquid() &&
+                block.getType().isAir();
     }
 }
