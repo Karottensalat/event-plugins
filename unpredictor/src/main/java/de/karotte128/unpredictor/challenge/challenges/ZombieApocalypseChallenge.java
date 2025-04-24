@@ -7,9 +7,10 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 
+import java.util.Random;
+
 public class ZombieApocalypseChallenge extends DefaultChallenge {
     private final World world = server.getWorld("world");
-
 
     @Override
     public void load() {
@@ -33,7 +34,20 @@ public class ZombieApocalypseChallenge extends DefaultChallenge {
     }
 
     private void spawnZombie(Player player) {
-        Location spawnLocation = player.getLocation(); //TODO: add some spread logic
+        Random rand = new Random();
+
+        double angle = rand.nextDouble() * 2 * Math.PI;
+
+        int maxRadius = 24;
+        int minRadius = 20;
+
+        double distance = Math.sqrt(rand.nextDouble()) *
+                (maxRadius - minRadius) + minRadius;
+
+        int x = (int)(Math.cos(angle) * distance);
+        int z = (int)(Math.sin(angle) * distance);
+
+        Location spawnLocation = player.getLocation().add(x ,0, z);
 
         Zombie zombie = world.spawn(spawnLocation, Zombie.class);
         zombie.addScoreboardTag("unpredictor_zombie_apocalypse");
