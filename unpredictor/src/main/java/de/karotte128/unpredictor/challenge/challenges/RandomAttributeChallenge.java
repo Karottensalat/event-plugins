@@ -2,13 +2,17 @@ package de.karotte128.unpredictor.challenge.challenges;
 
 import de.karotte128.unpredictor.challenge.DefaultChallenge;
 import de.karotte128.unpredictor.util.Debug;
+import io.papermc.paper.registry.RegistryAccess;
+import io.papermc.paper.registry.RegistryKey;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class RandomAttributeChallenge extends DefaultChallenge {
 
@@ -40,11 +44,14 @@ public class RandomAttributeChallenge extends DefaultChallenge {
     }
 
     private Attribute randomAttribute() {
-        List<Attribute> attributeList = new java.util.ArrayList<>(List.of(Attribute.values()));
+        Registry<Attribute> registry = RegistryAccess.registryAccess().getRegistry(RegistryKey.ATTRIBUTE);
 
-        attributeList.remove(Attribute.GENERIC_FLYING_SPEED);
-        attributeList.remove(Attribute.GENERIC_FOLLOW_RANGE);
-        attributeList.remove(Attribute.ZOMBIE_SPAWN_REINFORCEMENTS);
+        List<Attribute> attributeList = registry.stream().collect(Collectors.toList());
+
+        attributeList.remove(Attribute.FLYING_SPEED);
+        attributeList.remove(Attribute.FOLLOW_RANGE);
+        attributeList.remove(Attribute.SPAWN_REINFORCEMENTS);
+        attributeList.remove(Attribute.TEMPT_RANGE);
 
         Random rand = new Random();
         return attributeList.get(rand.nextInt(attributeList.size()));
