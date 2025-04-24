@@ -16,10 +16,9 @@ public class RandomAttributeChallenge extends DefaultChallenge {
 
     @Override
     public void load() {
-        AttributeModifier modifier = new AttributeModifier(new NamespacedKey(plugin, "attribute"), 100, AttributeModifier.Operation.ADD_SCALAR); //TODO: Change debug value 100 to random generated value
+        AttributeModifier modifier = new AttributeModifier(new NamespacedKey(plugin, "attribute"), randomInt(), AttributeModifier.Operation.ADD_NUMBER);
 
         server.getOnlinePlayers().forEach(player -> {
-            Debug.debugMessage(attribute.toString());
             Objects.requireNonNull(player.getAttribute(attribute)).addModifier(modifier);
         });
 
@@ -49,5 +48,10 @@ public class RandomAttributeChallenge extends DefaultChallenge {
 
         Random rand = new Random();
         return attributeList.get(rand.nextInt(attributeList.size()));
+    }
+
+    private Integer randomInt() {
+        Random rand = new Random();
+        return rand.nextInt(21) - 10; // Generates number between -10 and 10
     }
 }
