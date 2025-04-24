@@ -13,7 +13,7 @@ public class ZombieApocalypseChallenge extends DefaultChallenge {
 
     @Override
     public void load() {
-        scheduleTask(20);
+        scheduleTask(80);
         Debug.debugMessage("load zombie apocalypse challenge");
     }
 
@@ -38,5 +38,6 @@ public class ZombieApocalypseChallenge extends DefaultChallenge {
         Zombie zombie = world.spawn(spawnLocation, Zombie.class);
         zombie.addScoreboardTag("unpredictor_zombie_apocalypse");
         zombie.setShouldBurnInDay(false);
+        zombie.setCanBreakDoors(true);
     }
 }
