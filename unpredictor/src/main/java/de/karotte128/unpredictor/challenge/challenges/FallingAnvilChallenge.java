@@ -12,8 +12,7 @@ public class FallingAnvilChallenge extends DefaultChallenge {
     @Override
     public void load() {
         Debug.debugMessage("load falling anvil challenge");
-        int task = scheduleTask(5);
-        Debug.debugMessage("scheduled task " + task);
+        scheduleTask(5);
     }
 
     @Override
