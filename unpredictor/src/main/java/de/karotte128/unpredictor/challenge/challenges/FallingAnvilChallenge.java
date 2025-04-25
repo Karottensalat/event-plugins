@@ -4,6 +4,7 @@ import de.karotte128.unpredictor.challenge.DefaultChallenge;
 import de.karotte128.unpredictor.util.Debug;
 import org.bukkit.*;
 import org.bukkit.block.*;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 
 import java.util.Random;
@@ -29,8 +30,7 @@ public class FallingAnvilChallenge extends DefaultChallenge {
 
     private void spawnAnvil(Player player){
         if (player.getLocation().getWorld() == server.getWorld("world")) {
-            Block anvil = player.getWorld().getBlockAt(spawnLocation(player.getLocation()));
-            anvil.setType(Material.DAMAGED_ANVIL);
+            player.getWorld().getBlockAt(spawnLocation(player.getLocation())).setType(Material.DIAMOND_BLOCK);
         }
     }
 
