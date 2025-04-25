@@ -5,16 +5,9 @@ import de.karotte128.unpredictor.util.Debug;
 import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.block.*;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.block.structure.Mirror;
-import org.bukkit.block.structure.StructureRotation;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.util.VoxelShape;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
