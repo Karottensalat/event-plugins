@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class ChallengeManager {
-    private static final String[] challenges = {"test1", "rain_damage", "dangerous_blocks", "entity_interaction", "water_damage", "swapped_spawning", "attacking_blocks", "lightning_spawning", "random_attribute", "zombie_apocalypse", "sneaking_damage", "falling_anvils"};
+    private static final String[] challenges = {"test1", "rain_damage", "dangerous_blocks", "entity_interaction", "water_damage", "swapped_spawning", "attacking_blocks", "lightning_spawning", "random_attribute", "zombie_apocalypse", "sneaking_damage", "falling_anvils", "position_swap"};
   
     public static String currentChallenge;
 
@@ -77,6 +77,9 @@ public class ChallengeManager {
                 break;
             case "falling_anvils":
                 challengeClass = new FallingAnvilChallenge();
+                break;
+            case "position_swap":
+                challengeClass = new PositionSwapChallenge();
                 break;
             default:
                 challengeClass = null;
